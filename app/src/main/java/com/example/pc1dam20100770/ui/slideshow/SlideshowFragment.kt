@@ -4,39 +4,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.pc1dam20100770.R
 import com.example.pc1dam20100770.databinding.FragmentSlideshowBinding
 
 class SlideshowFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var editTextKilometros: EditText
+    private lateinit var editTextMinutos: EditText
+    private lateinit var buttonCalcular: Button
+    private lateinit var textViewResultado: TextView
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_slideshow, container, false)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        editTextKilometros = view.findViewById(R.id.edTxKil)
+        editTextMinutos = view.findViewById(R.id.edTxJug)
+        buttonCalcular = view.findViewById(R.id.btnFormula)
+        textViewResultado = view.findViewById(R.id.txReultado)
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        buttonCalcular.setOnClickListener { calcularRendimiento() }
+
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun calcularRendimiento() {
+        val kilometros = editTextKilometros.text.toString().toFloatOrNull()
+        val minutos = editTextMinutos.text.toString().toFloatOrNull()
+
+        if (kilometros != null && minutos != null && minutos > 0) {
+            val rendimiento = kilometros / minutos
+            textViewResultado.text = "Rendimiento físico: ${"%.2f".format(rendimiento)} km/min"
+        } else {
+            textViewResultado.text = "Por favor, ingrese valores válidos."
+        }
     }
 }

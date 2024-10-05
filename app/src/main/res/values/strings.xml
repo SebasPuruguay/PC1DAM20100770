@@ -14,4 +14,17 @@
     <string name="edTxPass1">Enter password</string>
     <string name="btnLog1">Login\n</string>
     <string name="signText">SIGN IN</string>
+    <string name="txV3">Nombre</string>
+    <string name="txV4">Edad</string>
+    <string name="txV5">Fecha de nacimiento\n</string>
+    <string name="tva">RENDIMIENTO</string>
+    <string name="edTxKil">Kilometros recorridos</string>
+    <string name="edTxJg">Minutos jugados</string>
+    <string name="btnForm">Calcular</string>
+    <string name="tvg">El rendimiento es:</string>
+    <string name="txVieResult" />
+    <string name="txResult">Resultado</string>
+    <string name="fragJUg">Jugadores</string>
+    <string name="fragRend">Rendimiento</string>
+    <string name="asd">JUGADORES</string>
 </resources>

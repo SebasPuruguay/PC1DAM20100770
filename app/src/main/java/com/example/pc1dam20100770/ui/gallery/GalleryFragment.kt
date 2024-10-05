@@ -1,42 +1,44 @@
 package com.example.pc1dam20100770.ui.gallery
 
+import Jugador
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.pc1dam20100770.databinding.FragmentGalleryBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.pc1dam20100770.JugadorAdapter
+import com.example.pc1dam20100770.R
 
 class GalleryFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var jugadorAdapter: JugadorAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val galleryViewModel =
-            ViewModelProvider(this).get(GalleryViewModel::class.java)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        recyclerView = view.findViewById(R.id.recvieJug)
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+        // Cargar los datos de los jugadores
+        cargarJugadores()
+
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun cargarJugadores() {
+        val jugadores = listOf(
+            Jugador("Tengo HAMBREERE", "1987", R.drawable.cuto),
+            Jugador("Cuevita por queee", "1985", R.drawable.cueva),
+            Jugador("Manco que no tenia nada de manco", "1992", R.drawable.manco)
+        )
+
+        jugadorAdapter = JugadorAdapter(jugadores)
+        recyclerView.adapter = jugadorAdapter
     }
 }
